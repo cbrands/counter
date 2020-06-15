@@ -5,17 +5,25 @@ import "./styles.css";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [results, setResults] = useState([]);
+
+  const addResult = result => {
+    setResults([result, ...results]);
+  };
 
   const incrementCount = size => {
     setCount(count + size);
+    addResult(count);
   };
 
   const decrementCount = size => {
     setCount(count - size);
+    addResult(count);
   };
 
   const reset = () => {
     setCount(0);
+    addResult(count);
   };
 
   return (
@@ -33,6 +41,18 @@ function App() {
       <Button onClickFunction={reset} text="reset" />
       <br />
       <span>{count}</span>
+      <br />
+      <br />
+      {results.length > 1 && (
+        <div>
+          <h3>Previous results</h3>
+          <ul>
+            {results.map((item, index) => (
+              <li key={index}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
